@@ -1,11 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import moment from 'moment'
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <div>
-      This is my header
+    <div className="ui secondary menu" >
+      <h2>Axis Tuition Centre{(props.centre) ? ` - ${props.centre}` : ''} </h2>
+      <div className="right menu" >
+        {moment().format('Do MMMM YYYY')}
+      </div>
     </div>
   )
 }
 
-export default Header
+const mapStateToProps = state => {
+  return { centre: state.selectedCentre }
+}
+
+export default connect(mapStateToProps)(Header)

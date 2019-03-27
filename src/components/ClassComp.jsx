@@ -3,7 +3,7 @@ import React from 'react'
 const ClassComp = () => {
   return (
     <div>
-      Todays Classes
+      Class 1
     </div>
   )
 }
