@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { Field, reduxForm } from 'redux-form'
 
-const ClassComp = () => {
-  return (
-    <div>
-      Class 1
-    </div>
-  )
+class ClassComp extends Component {
+  render() {
+    return (
+      <div>
+        this is a class
+      </div>
+    )
+  }
 }
 
-export default ClassComp
+export default reduxForm({
+  form: 'classForm'
+})(ClassComp)

@@ -1,8 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
-import Homepage from './Homepage'
 import TodaysClasses from './TodaysClasses'
 import Header from './Header';
+import NewClass from './NewClass';
+import SelectingFormValuesForm from './SelectingFormValuesForm';
+import Homepage from './HomePage'
 
 
 
@@ -14,6 +16,8 @@ const App = () => {
           <Header />
           <Route path="/" exact component={Homepage} />
           <Route path="/todaysclass" exact component={TodaysClasses} />
+          <Route path="/newclass" exact component={NewClass} />
+          <Route path="/test" exact component={SelectingFormValuesForm} />
         </div>
       </BrowserRouter>
     </div>

@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import { formValueSelector } from 'redux-form'
 
-const Header = (props) => {
+let Header = (props) => {
   return (
     <div className="ui secondary menu" >
-      <h2>Axis Tuition Centre{(props.centre) ? ` - ${props.centre}` : ''} </h2>
+      <h2>Axis Tuition Centre{(props.centreName) ? ` - ${props.centreName}` : ''} </h2>
       <div className="right menu" >
         {moment().format('Do MMMM YYYY')}
       </div>
@@ -13,8 +14,14 @@ const Header = (props) => {
   )
 }
 
-const mapStateToProps = state => {
-  return { centre: state.selectedCentre }
-}
 
-export default connect(mapStateToProps)(Header)
+const selector = formValueSelector('centreSelectForm')
+
+Header = connect(state => {
+  const centreName = selector(state, 'centreSelect')
+  return {
+    centreName
+  }
+})(Header)
+
+export default Header

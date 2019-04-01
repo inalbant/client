@@ -1,35 +1,49 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { selectCentre } from '../actions'
-import { Dropdown, Segment } from 'semantic-ui-react'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 
-const Homepage = (props) => {
-  const handleChange = (e, data) => {
-    props.selectCentre(data.value)
-  }
+const centres = ['Ponders End', 'North Finchley', 'Hendon', 'Walthamstow']
 
+const renderCentreDropdown = ({ input, label }) => {
+  console.log({ input })
   return (
-    <Segment>
-      <Dropdown
-        placeholder="Select a centre"
-        fluid
-        selection
-        options={props.centres}
-        onChange={handleChange}
-      />
-
-      Selected centre: {props.centre}
-    </Segment>
+    <div className="inline field">
+      <label>{label}</label>
+      <select {...input} >
+        <option value="">Select a centre...</option>
+        {centres.map(centre => (
+          <option value={centre} key={centre}>
+            {centre}
+          </option>
+        ))}
+      </select>
+    </div>
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    centres: state.centres,
-    centre: state.selectedCentre
-  }
+let HomePage = (props) => {
+  return (
+    <div className="ui form">
+      <form>
+        <Field name="centreSelect" label="Select a centre: " component={renderCentreDropdown} />
+      </form>
+      Selected centre: {props.centreName}
+    </div>
+  )
 }
 
 
+HomePage = reduxForm({
+  form: 'centreSelectForm'
+})(HomePage)
 
-export default connect(mapStateToProps, { selectCentre })(Homepage)
+const selector = formValueSelector('centreSelectForm')
+
+HomePage = connect(state => {
+  const centreName = selector(state, 'centreSelect')
+  return {
+    centreName
+  }
+})(HomePage)
+
+export default HomePage
