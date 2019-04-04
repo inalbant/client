@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
+import history from '../history'
 import TodaysClasses from './TodaysClasses'
 import Header from './Header';
 import NewClass from './NewClass';
@@ -11,7 +12,7 @@ import Homepage from './HomePage'
 const App = () => {
   return (
     <div className="ui container">
-      <BrowserRouter>
+      <Router history={history}>
         <div>
           <Header />
           <Route path="/" exact component={Homepage} />
@@ -19,7 +20,7 @@ const App = () => {
           <Route path="/newclass" exact component={NewClass} />
           <Route path="/test" exact component={SelectingFormValuesForm} />
         </div>
-      </BrowserRouter>
+      </Router>
     </div>
 
   )

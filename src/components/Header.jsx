@@ -6,7 +6,7 @@ import { formValueSelector } from 'redux-form'
 let Header = (props) => {
   return (
     <div className="ui secondary menu" >
-      <h2>Axis Tuition Centre{(props.centreName) ? ` - ${props.centreName}` : ''} </h2>
+      <h2 className="ui dividing header">Axis Tuition Centre{(props.centreName) ? ` - ${props.centreName}` : ''} </h2>
       <div className="right menu" >
         {moment().format('Do MMMM YYYY')}
       </div>

@@ -1,9 +1,11 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { createClass } from '../actions'
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-const renderDaysDropdown = ({ input, label }) => {
+const renderDaysDropdown = ({ input, label, meta: { touched, error } }) => {
   return (
     <div className="inline field">
       <label>{label}</label>
@@ -15,6 +17,7 @@ const renderDaysDropdown = ({ input, label }) => {
           </option>
         ))}
       </select>
+      {touched && error && <span className="ui mini negative message">{error}</span>}
     </div>
   )
 }
@@ -24,7 +27,8 @@ const renderInput = ({ input, label, type, meta: { touched, error } }) => {
     <span className="inline field">
       <label>{label}</label>
       <input {...input} type={type} />
-      {touched && error && <span>{error}</span>}
+      {touched && error && <span className="ui mini negative message">{error}</span>}
+
     </span>
   )
 }
@@ -63,13 +67,14 @@ const renderStudents = ({ fields, meta: { error } }) => {
   )
 }
 
+
 const NewClass = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <div className="ui segment">
       <h4 className="ui dividing header">New Class</h4>
-      <form className="ui form" onSubmit={handleSubmit} >
-        <div className="two fields">
+      <form className="ui form" onSubmit={handleSubmit((formValues) => props.createClass(formValues))} >
+        <div className="three fields">
           <Field name="teacher" component={renderInput} type="text" label="Teacher: " />
           <Field name="subject" component={renderInput} type="text" label="Subject: " />
         </div>
@@ -93,6 +98,26 @@ const NewClass = (props) => {
   )
 }
 
-export default reduxForm({
-  form: 'newClassForm'
+const validate = formValues => {
+  const errors = {}
+
+  if (!formValues.teacher) {
+    errors.teacher = 'Required'
+  }
+  if (!formValues.subject) {
+    errors.subject = 'Required'
+  }
+  if (!formValues.day) {
+    errors.day = 'Required'
+  }
+
+  return errors
+}
+
+
+const formWrapped = reduxForm({
+  form: 'newClassForm',
+  validate
 })(NewClass)
+
+export default connect(null, { createClass })(formWrapped)

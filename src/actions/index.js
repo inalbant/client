@@ -1,8 +1,7 @@
+import classes from '../apis/classes'
 
-// depreceated
-export const selectCentre = (centre) => {
-    return {
-        type: 'CENTRE_SELECTED',
-        payload: centre
-    }
+
+// async action thanks to redux-thunk
+export const createClass = formValues => async dispatch => {
+    classes.post('/classes', formValues)
 }
