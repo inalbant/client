@@ -1,6 +1,7 @@
 import React from 'react'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { createClass } from '../actions'
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -92,6 +93,10 @@ const NewClass = (props) => {
             <i className="undo icon" />
             Clear Values
         </button>
+          <Link to="/todaysclass" className="ui labeled negative icon button">
+            <i className="trash alternate icon" />
+            Cancel
+          </Link>
         </div>
       </form>
     </div>
