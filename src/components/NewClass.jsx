@@ -3,6 +3,7 @@ import { Field, FieldArray, reduxForm } from 'redux-form'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { createClass } from '../actions'
+import '../styles/newclassform.css'
 
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -72,33 +73,35 @@ const renderStudents = ({ fields, meta: { error } }) => {
 const NewClass = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
-    <div className="ui segment">
-      <h4 className="ui dividing header">New Class</h4>
-      <form className="ui form" onSubmit={handleSubmit((formValues) => props.createClass(formValues))} >
-        <div className="three fields">
-          <Field name="teacher" component={renderInput} type="text" label="Teacher: " />
-          <Field name="subject" component={renderInput} type="text" label="Subject: " />
-        </div>
-        <Field name="day" component={renderDaysDropdown} label="Day: " />
-        <div className="field">
-          <label>Students:</label>
-          <FieldArray name="students" component={renderStudents} />
-        </div>
-        <div>
-          <button className="ui labeled primary icon button" type="submit" disabled={submitting}>
-            <i className="paper plane icon" />
-            Submit
+    <div className="ui grid">
+      <div class="column">
+        <h4 className="ui dividing header">New Class</h4>
+        <form className="ui form fluid segment" onSubmit={handleSubmit((formValues) => props.createClass(formValues))} >
+          <div className="two fields">
+            <Field name="teacher" component={renderInput} type="text" label="Teacher: " />
+            <Field name="subject" component={renderInput} type="text" label="Subject: " />
+          </div>
+          <Field name="day" component={renderDaysDropdown} label="Day: " />
+          <div className="field">
+            <label>Students:</label>
+            <FieldArray name="students" component={renderStudents} />
+          </div>
+          <div>
+            <button className="ui labeled primary icon button" type="submit" disabled={submitting}>
+              <i className="paper plane icon" />
+              Submit
           </button>
-          <button className="ui labeled icon button" type="button" disabled={pristine || submitting} onClick={reset}>
-            <i className="undo icon" />
-            Clear Values
+            <button className="ui labeled icon button" type="button" disabled={pristine || submitting} onClick={reset}>
+              <i className="undo icon" />
+              Clear Values
         </button>
-          <Link to="/todaysclass" className="ui labeled negative icon button">
-            <i className="trash alternate icon" />
-            Cancel
+            <Link to="/todaysclass" className="ui labeled negative icon button">
+              <i className="trash alternate icon" />
+              Cancel
           </Link>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
