@@ -1,6 +1,5 @@
 import classes from '../apis/classes'
 
-
 // async action thanks to redux-thunk
 export const createClass = formValues => async dispatch => {
   const response = await classes.post('/classes', formValues)
@@ -32,8 +31,8 @@ export const deleteClass = id => async dispatch => {
   dispatch({ type: 'DELETE_CLASS', payload: id })
 }
 
-export const fetchIdClasses = () => async dispatch => {
+export const fetchAllClasses = () => async dispatch => {
   const response = await classes.get(`/classes`)
 
-  dispatch({ type: 'FETCH_IDCLASSES', payload: response.data })
+  dispatch({ type: 'FETCH_ALLCLASSES', payload: response.data })
 }

@@ -12,7 +12,7 @@ export default (state = {}, action) => {
       return _.omit(state, action.payload)
     case 'FETCH_TODAYCLASSES':
       return { ...state, ..._.mapKeys(action.payload, 'id') }
-    case 'FETCH_IDCLASSES':
+    case 'FETCH_ALLCLASSES':
       return { ...state, ..._.mapKeys(action.payload, 'id') }
     default:
       return state

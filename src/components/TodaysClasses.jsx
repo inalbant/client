@@ -1,34 +1,49 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-import { fetchTodayClasses, fetchIdClasses, fetchClass } from '../actions'
+import { fetchTodayClasses, deleteClass } from '../actions'
+import ClassComp from './ClassComp';
 
-export class TodaysClasses extends Component {
+class TodaysClasses extends Component {
 
   componentDidMount() {
     this.props.fetchTodayClasses('Tuesday')
   }
 
-  renderClasses() {
-    if (this.props.classes.length > 0) {
-      return this.props.classes.map(class => {
-        return(
-          <p> kk</p >
-        );
-    });
-  } else {
-  return <p>There are no classes for today.</p>
-}
+  renderClasses = (classes) => {
+    if (classes.length > 0) {
+      return classes.map((classRoom) => {
+        return (
+          <ClassComp classId={classRoom.id} key={classRoom.id}
+            deleteClass={this.props.deleteClass}
+          />
+        )
+      })
+    } else {
+      return <div>There are no classes for today.</div>
+    }
   }
 
-render() {
-  return (
-    <div>
-      <h3>{format(new Date(), "EEEE") + "'s"} Classes</h3>
-      {this.renderClasses()}
-    </div>
-  )
-}
+  render() {
+    return (
+      <div>
+        <h3>{format(new Date(), "EEEE") + "'s"} Classes</h3>
+        <div className="ui divider"></div>
+        <div className="ui grid container">
+          <div className="row">
+            {this.renderClasses(this.props.classes)}
+          </div>
+          <div className="row">
+            <Link to="/newclass" className="ui labeled primary icon button">
+              <i className="plus icon" />
+              Add Class
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => {
@@ -36,4 +51,4 @@ const mapStateToProps = state => {
   return { classes: Object.values(state.classes) }
 }
 
-export default connect(mapStateToProps, { fetchIdClasses, fetchTodayClasses, fetchClass })(TodaysClasses)
+export default connect(mapStateToProps, { fetchTodayClasses, deleteClass })(TodaysClasses)

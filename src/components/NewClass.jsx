@@ -74,7 +74,7 @@ const NewClass = (props) => {
   const { handleSubmit, pristine, reset, submitting } = props
   return (
     <div className="ui grid">
-      <div class="column">
+      <div className="column">
         <h4 className="ui dividing header">New Class</h4>
         <form className="ui form fluid segment" onSubmit={handleSubmit((formValues) => props.createClass(formValues))} >
           <div className="two fields">
@@ -90,15 +90,15 @@ const NewClass = (props) => {
             <button className="ui labeled primary icon button" type="submit" disabled={submitting}>
               <i className="paper plane icon" />
               Submit
-          </button>
+            </button>
             <button className="ui labeled icon button" type="button" disabled={pristine || submitting} onClick={reset}>
               <i className="undo icon" />
               Clear Values
-        </button>
+            </button>
             <Link to="/todaysclass" className="ui labeled negative icon button">
               <i className="trash alternate icon" />
               Cancel
-          </Link>
+            </Link>
           </div>
         </form>
       </div>

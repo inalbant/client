@@ -7,10 +7,11 @@ import { formValueSelector } from 'redux-form'
 const Header = (props) => {
   return (
     <div className="ui secondary menu" >
-      <h2 className="ui dividing header">Axis Tuition Centre{(props.centreName) ? ` - ${props.centreName}` : ''} </h2>
+      <h2 className="ui header">Axis Tuition Centre{(props.centreName) ? ` - ${props.centreName}` : ''} </h2>
       <div className="right menu" >
         {format(new Date(), "do MMMM yyyy - EEEE")}
       </div>
+      <div className="ui divider"></div>
     </div>
   )
 }
