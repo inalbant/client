@@ -6,6 +6,7 @@ import Header from './Header';
 import NewClass from './NewClass';
 import SelectingFormValuesForm from './SelectingFormValuesForm';
 import Homepage from './HomePage'
+import EditClass from './EditClass'
 
 
 
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/" exact component={Homepage} />
             <Route path="/todaysclass" exact component={TodaysClasses} />
             <Route path="/newclass" exact component={NewClass} />
+            <Route path="/todaysclass/edit/:id" exact component={EditClass} />
             <Route path="/test" exact component={SelectingFormValuesForm} />
           </Switch>
         </div>

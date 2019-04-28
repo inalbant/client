@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-//import { deleteClass, fetchAllClasses } from '../actions'
+import { Link } from 'react-router-dom'
+import { deleteClass } from '../actions'
+import Modal from './Modal'
 
 const ClassComp = (props) => {
-  const { teacher, subject, students, id } = props.classOf
+  const { teacher, subject, students, day } = props.classOf
+  const [modalVisible, setModalVisible] = useState(false)
+
+  if (modalVisible) {
+    return <Modal
+      onDismiss={() => setModalVisible(false)}
+      title="Delete class?"
+      content={renderModalContent(teacher, day)}
+      actions={renderModalActions(props, setModalVisible)}
+    />
+  }
 
   return (
     <div className="ui segment" style={segmentStyle} >
@@ -14,14 +26,23 @@ const ClassComp = (props) => {
         <div>{renderStudents(students)}</div>
         <div style={{ marginBottom: '30px' }}>
           <button className="mini compact ui negative right floated button"
-            onClick={() => props.deleteClass(id)}>Delete Class
+            onClick={() => setModalVisible(true)}>Delete Class
           </button>
-          <button className="mini compact ui right floated button">Edit Class</button>
+          <Link to={`/todaysclass/edit/${props.classId}`} className="mini compact ui right floated button">Edit Class</Link>
         </div>
-
       </div>
     </div >
   )
+}
+
+const renderModalContent = (teacher, day) => `Are you sure you want to delete ${teacher}'s ${day} class?`
+
+
+const renderModalActions = ({ classId, deleteClass }, setModalVisible) => {
+  return <>
+    <button onClick={() => deleteClass(classId)} className="ui button negative">Delete</button>
+    <button onClick={() => setModalVisible(false)} className="ui button">Cancel</button>
+  </>
 }
 
 const segmentStyle = {
@@ -47,4 +68,4 @@ const mapStateToProps = (state, ownProps) => {
   return { classOf: state.classes[ownProps.classId] }
 }
 
-export default connect(mapStateToProps)(ClassComp)
+export default connect(mapStateToProps, { deleteClass })(ClassComp)

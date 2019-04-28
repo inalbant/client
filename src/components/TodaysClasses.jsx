@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { format } from 'date-fns'
-import { fetchTodayClasses, deleteClass } from '../actions'
+import { fetchTodayClasses } from '../actions'
 import ClassComp from './ClassComp';
 
 class TodaysClasses extends Component {
@@ -13,13 +13,9 @@ class TodaysClasses extends Component {
 
   renderClasses = (classes) => {
     if (classes.length > 0) {
-      return classes.map((classRoom) => {
-        return (
-          <ClassComp classId={classRoom.id} key={classRoom.id}
-            deleteClass={this.props.deleteClass}
-          />
-        )
-      })
+      return classes.map((classRoom) =>
+        <ClassComp classId={classRoom.id} key={classRoom.id} />
+      )
     } else {
       return <div>There are no classes for today.</div>
     }
@@ -51,4 +47,4 @@ const mapStateToProps = state => {
   return { classes: Object.values(state.classes) }
 }
 
-export default connect(mapStateToProps, { fetchTodayClasses, deleteClass })(TodaysClasses)
+export default connect(mapStateToProps, { fetchTodayClasses })(TodaysClasses)
