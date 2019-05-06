@@ -21,11 +21,11 @@ const renderDaysDropdown = ({ input, label, meta: { touched, error } }) => {
   )
 }
 
-const renderInput = ({ input, label, type, meta: { touched, error } }) => {
+const renderInput = ({ input, label, type, checkedStatus, meta: { touched, error } }) => {
   return (
     <span className="inline field">
       <label>{label}</label>
-      <input {...input} type={type} />
+      <input {...input} type={type} checked={checkedStatus} />
       {touched && error && <span className="ui mini negative message">{error}</span>}
     </span>
   )
@@ -51,6 +51,12 @@ const renderStudents = ({ fields, meta: { error } }) => {
               >
                 <i className="delete icon" />
               </button>
+              <Field
+                name={`isPresent${student}`}
+                type="checkbox"
+                component={renderInput}
+                checkedStatus={false}
+              />
             </li>
           ))}
           {error && <li className="error">{error}</li>}

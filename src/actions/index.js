@@ -39,3 +39,9 @@ export const fetchAllClasses = () => async dispatch => {
 
   dispatch({ type: 'FETCH_ALLCLASSES', payload: response.data })
 }
+
+export const makeAttendance = (student) => async dispatch => {
+  const response = await classes.post('/attendace', student)
+
+  dispatch({ type: 'ATTENDANCE', payload: response.data })
+} 

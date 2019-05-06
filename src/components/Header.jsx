@@ -16,12 +16,11 @@ const Header = (props) => {
   )
 }
 
-
 const selector = formValueSelector('centreSelectForm')
 
-export default connect(state => {
-  const centreName = selector(state, 'centreSelect')
-  return {
-    centreName
-  }
-})(Header)
+const mapStateToProps = (state) => {
+  return { centreName: selector(state, 'centreSelect') }
+
+}
+
+export default connect(mapStateToProps)(Header)

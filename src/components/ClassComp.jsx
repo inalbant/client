@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { deleteClass } from '../actions'
 import Modal from './Modal'
+import StudentCheckbox from './StudentCheckbox';
 
-const ClassComp = (props) => {
-  const { teacher, subject, students, day } = props.classOf
+let ClassComp = (props) => {
+  const { teacher, subject, students, day, isPresentstudents } = props.classOf
   const [modalVisible, setModalVisible] = useState(false)
 
   if (modalVisible) {
@@ -17,13 +18,44 @@ const ClassComp = (props) => {
     />
   }
 
+  const renderStudents = (students, isPresentstudents) => {
+    if (isPresentstudents && students.length > 0) {
+      return (
+        <div>
+          {students.map((student, index) =>
+            <StudentCheckbox key={index}
+              student={student}
+              handleCheckboxClick={handleCheckboxClick}
+              checkedStatus={isPresentstudents[index]}
+            />
+          )}
+        </div>
+      )
+    } else {
+      return <p style={{ margin: '10px' }} >No students registered.</p>
+    }
+  }
+
+  const handleCheckboxClick = (elId) => {
+    const presentStudentEl = document.getElementById('present-students')
+
+    // move StudentCheckbox element inside this element ^
+  }
+
   return (
     <div className="ui segment" style={segmentStyle} >
       <div className="content">
         <div className="ui medium header">{teacher} - {subject}</div>
         <div className="ui divider"></div>
         <div className="ui sub header">Students</div>
-        <div>{renderStudents(students)}</div>
+        <div className="ui tiny header">Present:
+          <div id="present-students"></div>
+        </div>
+        <div className="ui tiny header">Absent:
+          <div id="absent-students">
+            {renderStudents(students, isPresentstudents)}
+          </div>
+        </div>
         <div style={{ marginBottom: '30px' }}>
           <button className="mini compact ui negative right floated button"
             onClick={() => setModalVisible(true)}>Delete Class
@@ -37,7 +69,6 @@ const ClassComp = (props) => {
 
 const renderModalContent = (teacher, day) => `Are you sure you want to delete ${teacher}'s ${day} class?`
 
-
 const renderModalActions = ({ classId, deleteClass }, setModalVisible) => {
   return <>
     <button onClick={() => deleteClass(classId)} className="ui button negative">Delete</button>
@@ -50,22 +81,11 @@ const segmentStyle = {
   width: '200px'
 }
 
-const renderStudents = (students) => {
-  if (students && students.length > 0) {
-    return (
-      <ol>
-        {students.map((student, index) =>
-          <li key={index}>{student}</li>
-        )}
-      </ol>
-    )
-  } else {
-    return <p style={{ margin: '10px' }} >No students registered.</p>
-  }
-}
+
 
 const mapStateToProps = (state, ownProps) => {
   return { classOf: state.classes[ownProps.classId] }
 }
+
 
 export default connect(mapStateToProps, { deleteClass })(ClassComp)

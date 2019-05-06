@@ -6,9 +6,9 @@ import { fetchTodayClasses } from '../actions'
 import ClassComp from './ClassComp';
 
 class TodaysClasses extends Component {
-
   componentDidMount() {
-    this.props.fetchTodayClasses('Tuesday')
+    this.today = format(new Date(), "EEEE")
+    this.props.fetchTodayClasses(this.today)
   }
 
   renderClasses = (classes) => {
@@ -24,7 +24,7 @@ class TodaysClasses extends Component {
   render() {
     return (
       <div>
-        <h3>{format(new Date(), "EEEE") + "'s"} Classes</h3>
+        <h3>{this.today + "'s"} Classes</h3>
         <div className="ui divider"></div>
         <div className="ui grid container">
           <div className="row">
@@ -33,7 +33,7 @@ class TodaysClasses extends Component {
           <div className="row">
             <Link to="/newclass" className="ui labeled primary icon button">
               <i className="plus icon" />
-              Add Class
+              New Class
             </Link>
           </div>
         </div>
